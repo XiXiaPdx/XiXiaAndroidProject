@@ -23,6 +23,7 @@ Once they have decided, they can click on a photo and it will generate a Yelp li
 
 - [x] Test UnSplash API in browser. Return Json.
 - [ ] Create UnSplashService class and return LogCat response.
+- [ ] transform response into Picture object
 - [ ] Create Recycler View for UnSplash on main
 - [ ] Create Button on View Item To Search local
 - [ ] Button intent moves to RestaurantActivity

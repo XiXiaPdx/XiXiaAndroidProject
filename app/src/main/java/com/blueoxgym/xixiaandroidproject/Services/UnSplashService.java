@@ -1,6 +1,13 @@
 package com.blueoxgym.xixiaandroidproject.Services;
 
 import com.blueoxgym.xixiaandroidproject.Constants;
+import com.blueoxgym.xixiaandroidproject.Models.Picture;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -25,5 +32,22 @@ public class UnSplashService {
                 .build();
         Call call = client.newCall(request);
         call.enqueue(callback);
+    }
+    public ArrayList<Picture>processResults(JSONArray picsJSONArray){
+        ArrayList<Picture> pictures = new ArrayList<>();
+        try {
+            for (int i = 0; i < picsJSONArray.length(); i++) {
+                JSONObject pictureJSON = picsJSONArray.getJSONObject(i);
+                String ID = pictureJSON.getString("id");
+//                JSONObject pictureUrlsJSON = pictureJSON.getJSONObject();
+//
+//                String imageURL = pictureJSON.getString()
+                Picture picture = new Picture (ID);
+                pictures.add(picture);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return pictures;
     }
 }
