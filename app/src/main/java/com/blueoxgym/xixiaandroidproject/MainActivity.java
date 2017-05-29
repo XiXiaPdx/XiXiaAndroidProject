@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -56,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                           mAdapter = new PictureListAdapter(getApplicationContext(), mPictures);
-                            mPictureRecycleView.setAdapter(mAdapter);
-                            mPictureRecycleView.setHasFixedSize(true);
+                            AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
+                            animateAdapter.setDuration(1500);
+                            mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
 
+                            mPictureRecycleView.setHasFixedSize(true);
 
                         }
                     });
