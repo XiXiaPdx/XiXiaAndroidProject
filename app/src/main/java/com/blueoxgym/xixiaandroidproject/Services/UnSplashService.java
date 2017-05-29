@@ -39,10 +39,8 @@ public class UnSplashService {
             for (int i = 0; i < picsJSONArray.length(); i++) {
                 JSONObject pictureJSON = picsJSONArray.getJSONObject(i);
                 String ID = pictureJSON.getString("id");
-//                JSONObject pictureUrlsJSON = pictureJSON.getJSONObject();
-//
-//                String imageURL = pictureJSON.getString()
-                Picture picture = new Picture (ID);
+                String pictureUrl = pictureJSON.getJSONObject("urls").getString("regular");
+                Picture picture = new Picture (ID, pictureUrl);
                 pictures.add(picture);
             }
         } catch (JSONException e) {

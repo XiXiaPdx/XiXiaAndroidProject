@@ -23,13 +23,10 @@ public class Picture {
     public void setImageUrl(String mImageUrl) {
         this.mImageUrl = mImageUrl;
     }
-    public Picture (String ID){
+
+    public Picture (String ID, String imageURL){
         this.mID = ID;
+        this.mImageUrl = imageURL;
 
     }
-//    public Picture (String ID, String imageURL){
-//        this.mID = ID;
-//        this.mImageUrl = imageURL;
-//
-//    }
 }

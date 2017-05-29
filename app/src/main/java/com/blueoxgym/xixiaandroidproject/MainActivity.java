@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray picJSONArray = new JSONArray(jsonData);
                      mPictures = unSplashService.processResults(picJSONArray);
                     for(Picture picture: mPictures){
-                        Log.d("Pic ID ", picture.getID());
+                        Log.d("Pic URL ", picture.getImageUrl());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
