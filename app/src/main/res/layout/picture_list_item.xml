@@ -21,5 +21,16 @@
             android:src="@drawable/mainbg"
             />
 
+        <Button
+            android:id="@+id/button"
+            style="@android:style/Widget.Material.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            android:text="Find"
+            android:textAllCaps="false"
+            android:textColor="@color/icons"/>
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>
