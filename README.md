@@ -29,23 +29,8 @@ Once they have decided, they can click on a photo and it will generate a Yelp li
 - [ ] Button intent moves to RestaurantActivity
 - [ ] Style Content
 
-### 4. Components
-
-FilteredAnimals
-
-FilterTool
-
-Add New Animal
-
-Edit Current Animal
 
 
-### 5. Specs
-
-
-| Behavior | Input Example| Output Example    |
-| ---------| -----------------|-----------------|
-|create a new Animal Object|new Animal(params)| Animal |
 
 # Technologies
 
@@ -56,43 +41,50 @@ Angular 2, TypeScript, JavaScript, Jquery, HTML5, CSS
 
 You will need the following software properly installed on your computer.
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Bower](https://bower.io/)
+* [Android Studio 2.3.2](https://developer.android.com/studio/index.html)
+
+You'll also need an API Client ID token from UnSplash. [You can get it here](https://unsplash.com/login)
+
+They will ask for your App name but you don't need to have one and will still get a API token. You are limited to 50 calls per hour.
 
 
 ## Installation
 
-Perform the following  steps at your terminal prompt
+Perform the following steps to setup the app to run in Android Studio.
 
-* #### Enter the following to download the app files.
+* #### Get the UnSplash API Client ID. [You can get it here](https://unsplash.com/login)
+
+* #### In Android Studio, open the Terminal. At the prompt, navigate into your "AndroidStudioProjects" folder.
+
+
+
+Once there, run the following command.
 ```
-git clone https://github.com/XiXiaPdx/zoo-angular.git
+git clone https://github.com/XiXiaPdx/XiXiaAndroidProject.git
 ```
-*  #### get into the app folder
+*  #### Navigate into the project folder
 ```
-cd ng-zoo
+cd XiXiaAndroidProject
 ```
-*  #### install node dependencies
+*  #### create file gradle.properties to hold your UnSplash Client ID token. I'm using Atom.
 ```
-npm install
+atom gradle.properties
 ```
-* #### install bower dependencies
+* #### insert the following text into gradle.properties.
+
 ```
-bower install
+org.gradle.jvmargs=-Xmx1536m
+UnSplashId = "Your Client ID From UnSplash Goes Here!!!"
+
 ```
-* #### gulp build
-```
-gulp build
-```
-* #### gulp serve
-```
-gulp serve
-```
+* #### Android Studio should prompt you to Gradle Sync.  At this point, a gradle sync shoudl clear any warnings and the whole project will gradle build.
+
+* #### Run the app in the emulator. Nexus 6.
+
 
 ## Further Exploration
 
-The code isn't efficient. The filtering mechanism runs extra loops that are not necessary.
+
 
 ## License
 
