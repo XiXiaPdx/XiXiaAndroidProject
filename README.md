@@ -77,9 +77,16 @@ org.gradle.jvmargs=-Xmx1536m
 UnSplashId = "Your Client ID From UnSplash Goes Here!!!"
 
 ```
-* #### Android Studio should prompt you to Gradle Sync.  At this point, a gradle sync shoudl clear any warnings and the whole project will gradle build.
+* #### Android Studio should prompt you to Gradle Sync.  At this point, a gradle sync should clear any warnings and the whole project will gradle build.
 
-* #### Run the app in the emulator. Nexus 6.
+* #### Run the app in the emulator. I am emulating a Nexus 6.
+
+### Login Details
+
+email is "perry@me.com"
+password is "hello"
+
+The Login Activity is not finalized. Currently, it does show form validation for the purpose of the assignment. 
 
 
 ## Further Exploration
