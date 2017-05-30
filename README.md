@@ -32,7 +32,7 @@ Once they have decided, they can click on a photo and it will generate a Yelp li
 - [x] Contacted UnSplash about photo tag data. Where is it?
 
 #### Phase 2
-- [] Depending on response from UnSplash team...
+- [ ] Depending on response from UnSplash team...
 
 
 # Technologies
