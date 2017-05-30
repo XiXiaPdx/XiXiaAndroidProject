@@ -1,7 +1,7 @@
 # Appetizing
 - Android capstone project for Epicodus coding school.
 
-![Zoo of Mythical Creatures](./readMeRes/sandwich.jpg)
+![UnSplash Food photography](./readMeRes/sandwich.jpg)
 
 Have you ever been hungry but didn't know what you wanted to eat?
 
@@ -16,6 +16,8 @@ Appetizing is a stream of category=food photography from the UnSplash API.
 The user is hungry and undecided. As they scroll through the beautiful hi-res photos, their visual senses will engage to help them make a decision on what to eat.
 
 Once they have decided, they can click on a photo and it will generate a Yelp list of restaurants near them that serve that type of food.
+
+![Appetizing Screen Shot](./readMeRes/AppetizingScreenShot.jpg)
 
 ## Planning
 
@@ -34,8 +36,7 @@ Once they have decided, they can click on a photo and it will generate a Yelp li
 
 # Technologies
 
-Angular 2, TypeScript, JavaScript, Jquery, HTML5, CSS
-[Angular Material](https://material.angular.io/) and [Materialize](http://materializecss.com/) for front-end css frameworks.
+Java, Android Studio
 
 ## Prerequisites
 
@@ -86,7 +87,7 @@ UnSplashId = "Your Client ID From UnSplash Goes Here!!!"
 email is "perry@me.com"
 password is "hello"
 
-The Login Activity is not finalized. Currently, it does show form validation for the purpose of the assignment. 
+The Login Activity is not finalized. Currently, it does show form validation for the purpose of the assignment.
 
 
 ## Further Exploration
