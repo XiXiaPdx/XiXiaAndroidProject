@@ -1,6 +1,7 @@
 package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.R;
+import com.blueoxgym.xixiaandroidproject.RestaurantsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,6 +47,9 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
                 @Override
                 public void onClick(View v) {
                     Log.d("find button", Integer.toString(getAdapterPosition()));
+                    Intent intent = new Intent (mContext, RestaurantsActivity.class);
+                    intent.putExtra("position", getAdapterPosition());
+                    mContext.startActivity(intent);
                 }
             });
         }
