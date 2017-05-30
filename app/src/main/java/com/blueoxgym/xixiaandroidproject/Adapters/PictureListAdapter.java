@@ -41,6 +41,12 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             super (itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            mFindFoodButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Log.d("find button", Integer.toString(getAdapterPosition()));
+                }
+            });
         }
 
         public void bindPicture (Picture picture){
@@ -57,14 +63,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(PictureViewHolder holder, int position) {
+    public void onBindViewHolder(PictureViewHolder holder,  int position) {
         holder.bindPicture(mPictures.get(position));
-        holder.mFindFoodButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Log.d("find button", "I work");
-            }
-        });
     }
 
     @Override
