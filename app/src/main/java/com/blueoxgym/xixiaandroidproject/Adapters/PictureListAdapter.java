@@ -2,9 +2,11 @@ package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
@@ -32,6 +34,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     public class PictureViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.pictureItemView)
         ImageView mPictureView;
+        @Bind(R.id.findFoodButton)
+        Button mFindFoodButton;
         private Context context;
         public PictureViewHolder (View itemView) {
             super (itemView);
@@ -55,6 +59,12 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     @Override
     public void onBindViewHolder(PictureViewHolder holder, int position) {
         holder.bindPicture(mPictures.get(position));
+        holder.mFindFoodButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("find button", "I work");
+            }
+        });
     }
 
     @Override
