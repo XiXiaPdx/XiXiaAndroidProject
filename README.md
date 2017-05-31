@@ -29,9 +29,10 @@ Once they have decided, they can click on a photo and it will generate a Yelp li
 - [x] Create Recycler View for UnSplash on main
 - [x] Create Button on View Item To Search local
 - [x] Button intent moves to RestaurantActivity
-- [ ] Style Content
+- [x] Contacted UnSplash about photo tag data. Where is it?
 
-
+#### Phase 2
+- [ ] Depending on response from UnSplash team...
 
 
 # Technologies
