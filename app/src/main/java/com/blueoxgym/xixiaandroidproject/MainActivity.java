@@ -9,9 +9,6 @@ import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.Services.UnSplashService;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -48,11 +45,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String jsonData = response.body().string();
-                    JSONArray picJSONArray = new JSONArray(jsonData);
-                     mPictures = unSplashService.processResults(picJSONArray);
+            public void onResponse(Call call, Response response) {
+
+                     mPictures = unSplashService.processResults(response);
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -60,17 +55,10 @@ public class MainActivity extends AppCompatActivity {
                             AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
                             animateAdapter.setDuration(1500);
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
-
                             mPictureRecycleView.setHasFixedSize(true);
-
                         }
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e){
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
     }
 }
