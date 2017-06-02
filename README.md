@@ -30,9 +30,33 @@ Once they have decided, they can click on a photo and it will generate a Yelp li
 - [x] Create Button on View Item To Search local
 - [x] Button intent moves to RestaurantActivity
 - [x] Contacted UnSplash about photo tag data. Where is it?
+- [x] UnSplash, no response. Changing course.
+
 
 #### Phase 2
-- [ ] Depending on response from UnSplash team...
+
+Finding a stream of high quality RANDOM food pictures that are already tagged/labeled with the food name( e.g. "Pizza") is harder than I thought.
+
+Yummly has great photos, perfectly labeled...but there is no method to get random photos from them.  Why would anyone go to a recipe site and search for random photos???
+
+UnSpash has hi-quality, current, food photos.  You can get random photos from them in a stream.  BUT, the photos are NOT LABELED!   Actually, the photos ARE TAGGED  but the TAG isn't part of the JSON return from the API call.
+
+
+##### New Plan:
+
+1. Use UnSplash to get random photo stream.
+2. Put "Search" Icon on each picture.
+3. Clicking "Search" opens a modal Fragment with larger sized picture.
+4. Below picture will have input field asking the user to describe the dish they see in the picture.
+5. Below input field, 3 buttons.
+  * Close modal
+    * This closes the modal, goes back to main picture stream.
+  * Search Restaurants
+    * This uses their description to search Yelp API Activity for food.
+  * Search Similar Dishes
+    * This users their description to search Yummly API for recipes. Opens new activity to show refined search.  Yummly has all food labeled so photos will be labeled with food name and can clicked on to search Yelp.
+
+
 
 
 # Technologies
