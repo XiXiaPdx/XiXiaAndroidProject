@@ -3,7 +3,6 @@ package com.blueoxgym.xixiaandroidproject.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,38 +32,38 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         mPictures = pictures;
     }
 
-    public class PictureViewHolder extends RecyclerView.ViewHolder{
+    public class PictureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.pictureItemView)
         ImageView mPictureView;
         @Bind(R.id.findFoodButton)
         ImageButton mFindFoodButton;
         private Context context;
-        public PictureViewHolder (View itemView) {
-            super (itemView);
+
+        public PictureViewHolder(View itemView)   {
+            super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
-//            mFindFoodButton.setOnClickListener(new View.OnClickListener(){
+            mFindFoodButton.setOnClickListener(this);
+//            mFindFoodButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    Log.d("find button", Integer.toString(getAdapterPosition()));
-//                    Intent intent = new Intent (mContext, RestaurantsActivity.class);
+//                    Intent intent = new Intent(mContext, RestaurantsActivity.class);
 //                    intent.putExtra("position", getAdapterPosition());
 //                    mContext.startActivity(intent);
 //                }
 //            });
         }
 
-        public void bindPicture (Picture picture){
+        public void bindPicture(Picture picture) {
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
-            mFindFoodButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    Log.d("find button", Integer.toString(getAdapterPosition()));
-                    Intent intent = new Intent (mContext, RestaurantsActivity.class);
-                    intent.putExtra("position", getAdapterPosition());
-                    mContext.startActivity(intent);
-                }
-            });
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(mContext, RestaurantsActivity.class);
+            intent.putExtra("position", getAdapterPosition());
+            mContext.startActivity(intent);
 
         }
     }
