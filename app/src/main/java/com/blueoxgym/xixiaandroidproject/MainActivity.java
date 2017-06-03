@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
@@ -13,6 +12,8 @@ import com.blueoxgym.xixiaandroidproject.Fragments.DescribeFoodFragment;
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.Services.UnSplashService;
+
+import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,9 +75,11 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
     @Override
     public void openDescribeFragment(View v, Picture picture) {
-        Log.d("position ", picture.getImageUrl());
         FragmentManager fm = getFragmentManager();
         DescribeFoodFragment describeFoodFragment= new DescribeFoodFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("picture", Parcels.wrap(picture));
+        describeFoodFragment.setArguments(args);
         describeFoodFragment.show(fm, "Describe Food Fragment");
     }
 }
