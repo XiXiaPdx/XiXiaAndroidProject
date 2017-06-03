@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
@@ -37,12 +37,25 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         @Bind(R.id.pictureItemView)
         ImageView mPictureView;
         @Bind(R.id.findFoodButton)
-        Button mFindFoodButton;
+        ImageButton mFindFoodButton;
         private Context context;
         public PictureViewHolder (View itemView) {
             super (itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+//            mFindFoodButton.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("find button", Integer.toString(getAdapterPosition()));
+//                    Intent intent = new Intent (mContext, RestaurantsActivity.class);
+//                    intent.putExtra("position", getAdapterPosition());
+//                    mContext.startActivity(intent);
+//                }
+//            });
+        }
+
+        public void bindPicture (Picture picture){
+            Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
             mFindFoodButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -52,10 +65,6 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
                     mContext.startActivity(intent);
                 }
             });
-        }
-
-        public void bindPicture (Picture picture){
-            Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
 
         }
     }
