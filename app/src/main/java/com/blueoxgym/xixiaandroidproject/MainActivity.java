@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
@@ -72,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
 
     @Override
-    public void openDescribeFragment(View v) {
+    public void openDescribeFragment(View v, Picture picture) {
+        Log.d("position ", picture.getImageUrl());
         FragmentManager fm = getFragmentManager();
         DescribeFoodFragment describeFoodFragment= new DescribeFoodFragment();
         describeFoodFragment.show(fm, "Describe Food Fragment");

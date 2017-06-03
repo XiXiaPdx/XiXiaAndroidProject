@@ -56,8 +56,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
 
         @Override
         public void onClick(View v) {
-            mOpenDescribe.openDescribeFragment(v);
-
+            mOpenDescribe.openDescribeFragment(v, mPictures.get(getAdapterPosition()));
 //            Intent intent = new Intent(mContext, RestaurantsActivity.class);
 //            intent.putExtra("position", getAdapterPosition());
 //            mContext.startActivity(intent);
