@@ -1,11 +1,13 @@
 package com.blueoxgym.xixiaandroidproject;
 
 import android.app.FragmentManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
 import com.blueoxgym.xixiaandroidproject.Fragments.DescribeFoodFragment;
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     public ArrayList<Picture> mPictures = new ArrayList<>();
     @Bind(R.id.pictureRecycleView)
     RecyclerView mPictureRecycleView;
+    @Bind(R.id.appNameTextView)
+    TextView mAppName;
+    @Bind(R.id.byLineTextView) TextView mByLine;
     private PictureListAdapter mAdapter;
     private StaggeredGridLayoutManager picGridLayOut;
     private OpenDescribeFragment mOpenDescribe;
@@ -41,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         getFoodPictures();
         picGridLayOut = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mPictureRecycleView.setLayoutManager(picGridLayOut);
+        Typeface righteous = Typeface.createFromAsset(getAssets(), "Fonts/Righteous-Regular.ttf");
+        mAppName.setTypeface(righteous);
+        mByLine.setTypeface(righteous);
     }
 
     public void getFoodPictures(){
