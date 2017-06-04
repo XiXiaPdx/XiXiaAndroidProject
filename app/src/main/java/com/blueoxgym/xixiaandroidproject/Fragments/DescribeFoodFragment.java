@@ -2,7 +2,9 @@ package com.blueoxgym.xixiaandroidproject.Fragments;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import org.parceler.Parcels;
 public class DescribeFoodFragment extends DialogFragment implements View.OnClickListener{
     private Button closeButton;
     private EditText describeEditText;
+    private Button openCamera;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -32,6 +35,8 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
         ImageView describePictureView = (ImageView) rootView.findViewById(R.id.describePictureView);
         describeEditText = (EditText) rootView.findViewById(R.id.describeEditText);
         closeButton = (Button) rootView.findViewById(R.id.closeButton);
+        openCamera = (Button) rootView.findViewById(R.id.openCamera);
+        openCamera.setOnClickListener(this);
         closeButton.setOnClickListener(this);
         Bundle bundle = getArguments();
          Picture picture = Parcels.unwrap(bundle.getParcelable("picture"));
@@ -44,6 +49,13 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
         if (validate()) {
             if (v == closeButton) {
                 dismiss();
+            }
+        }
+        if (v == openCamera ){
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) !=
+                    null) {
+                startActivityForResult(takePictureIntent, 1);
             }
         }
 
