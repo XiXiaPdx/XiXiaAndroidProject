@@ -60,4 +60,23 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="49dp"/>
+
+    <EditText
+        android:id="@+id/describeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/cardview_light_background"
+        android:ems="10"
+        android:hint='Describe what you want to eat, "i.e. pizza"'
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColorHint="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="@+id/describePictureView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

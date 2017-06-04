@@ -44,16 +44,16 @@ UnSpash has hi-quality, current, food photos.  You can get random photos from th
 
 ##### New Plan:
 
-1. Use UnSplash to get random photo stream.
-2. Put "Search" Icon on each picture.
-3. Clicking "Search" opens a modal Fragment with larger sized picture.
-4. Below picture will have input field asking the user to describe the dish they see in the picture.
-5. Below input field, 3 buttons.
-  * Close modal
+- [x] 1. Use UnSplash to get random photo stream.
+- [x] 2. Put "Search" Icon on each picture.
+- [x] 3. Clicking "Search" opens a modal Fragment with - [ larger sized picture.
+- [ ] 4. Below picture will have input field asking the user to describe the dish they see in the picture.
+- [x] 5. Below input field, 3 buttons.
+- [x] Close modal
     * This closes the modal, goes back to main picture stream.
-  * Search Restaurants
+- [ ]  * Search Restaurants
     * This uses their description to search Yelp API Activity for food.
-  * Search Similar Dishes
+- [ ]  * Search Similar Dishes
     * This users their description to search Yummly API for recipes. Opens new activity to show refined search.  Yummly has all food labeled so photos will be labeled with food name and can clicked on to search Yelp.
 
 
