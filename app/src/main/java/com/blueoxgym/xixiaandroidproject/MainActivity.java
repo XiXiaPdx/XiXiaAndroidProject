@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -90,4 +94,27 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         describeFoodFragment.setArguments(args);
         describeFoodFragment.show(fm, "Describe Food Fragment");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            Log.d("ACTION IS", "LOG OUT ");
+            return true;
+        }
+        if (id == R.id.action_login) {
+            Log.d("ACTION IS", "LOG IN ");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
