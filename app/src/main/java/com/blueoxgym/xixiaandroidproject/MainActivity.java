@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
                     Log.d(TAG, "The user is " + user.getEmail());
+                } else {
+                    Log.d(TAG, "The user logged out");
+
                 }
 
             }
@@ -145,6 +148,10 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         loginFragment.show(fm, "something");
     }
 
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -156,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
-            Log.d("ACTION IS", "LOG OUT ");
+            logout();
             return true;
         }
         if (id == R.id.action_login) {
