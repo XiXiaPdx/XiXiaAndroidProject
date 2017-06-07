@@ -7,8 +7,8 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class Picture {
-    private String mID;
-    private String mImageUrl;
+    public String mID;
+    public String mImageUrl;
 
     public String getID() {
         return mID;

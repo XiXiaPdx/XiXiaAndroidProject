@@ -1,8 +1,10 @@
 package com.blueoxgym.xixiaandroidproject;
 
+
 import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
 import com.blueoxgym.xixiaandroidproject.Fragments.DescribeFoodFragment;
+import com.blueoxgym.xixiaandroidproject.Fragments.LoginFragment;
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.Services.UnSplashService;
@@ -31,6 +34,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.blueoxgym.xixiaandroidproject.R.id.describeFoodLayout;
+
 public class MainActivity extends AppCompatActivity implements OpenDescribeFragment{
     public ArrayList<Picture> mPictures = new ArrayList<>();
     @Bind(R.id.pictureRecycleView)
@@ -42,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     private StaggeredGridLayoutManager picGridLayOut;
     private OpenDescribeFragment mOpenDescribe;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mPictureRecycleView.setLayoutManager(picGridLayOut);
         Typeface righteous = Typeface.createFromAsset(getAssets(), "Fonts/Righteous-Regular.ttf");
         mAppName.setTypeface(righteous);
+
         mByLine.setTypeface(righteous);
+
     }
 
     public void getFoodPictures(){
@@ -85,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     }
 
 
-    @Override
     public void openDescribeFragment(View v, Picture picture) {
         FragmentManager fm = getFragmentManager();
         DescribeFoodFragment describeFoodFragment= new DescribeFoodFragment();
@@ -93,6 +100,12 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         args.putParcelable("picture", Parcels.wrap(picture));
         describeFoodFragment.setArguments(args);
         describeFoodFragment.show(fm, "Describe Food Fragment");
+    }
+
+    public void openLoginFragment() {
+        FragmentManager fm = getFragmentManager();
+        LoginFragment loginFragment= new LoginFragment();
+        loginFragment.show(fm, "something");
     }
 
     @Override
@@ -111,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         }
         if (id == R.id.action_login) {
             Log.d("ACTION IS", "LOG IN ");
+            openLoginFragment();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
