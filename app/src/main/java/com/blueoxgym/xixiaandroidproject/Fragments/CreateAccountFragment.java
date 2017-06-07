@@ -1,29 +1,44 @@
 package com.blueoxgym.xixiaandroidproject.Fragments;
 
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.NonNull;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.blueoxgym.xixiaandroidproject.MainActivity;
+import com.blueoxgym.xixiaandroidproject.MainActivity$$ViewBinder;
 import com.blueoxgym.xixiaandroidproject.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CreateAccountFragment extends DialogFragment implements View.OnClickListener {
+    public static final String TAG = CreateAccountFragment.class.getSimpleName();
+
     public Button mLoginButton;
     public Button mSubmitButton;
     public EditText mPassword;
     public EditText mEmail;
     public EditText mName;
     public EditText mConfirmPassword;
+    public FirebaseAuth mAuth;
+    public Context context;
+
 
     public CreateAccountFragment() {
         // Required empty public constructor
@@ -43,7 +58,8 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
         mEmail =(EditText) rootView.findViewById(R.id.emailEditText);
         mLoginButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
-
+        mAuth = FirebaseAuth.getInstance();
+        context = getActivity();
         return rootView;
     }
 
@@ -53,13 +69,31 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
         loginFragment.show(fm, "open login fragment");
     }
 
-    public void createNewUser(){
-        String password = mPassword.getText().toString().trim();
+    public void createNewUser(final Context context){
+        final String password = mPassword.getText().toString().trim();
         String confirmPassword= mConfirmPassword.getText().toString().trim();
-        String email = mEmail.getText().toString().trim();
+        final String email = mEmail.getText().toString().trim();
         String name = mName.getText().toString().trim();
-        Log.d("user info", "I got your inputs" + email);
+
+
+
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()){
+                            Log.d(TAG, "Authentication successful");
+                        } else {
+                            Toast.makeText(context, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -68,7 +102,7 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
             openLoginFragment();
         }
         if (v == mSubmitButton){
-            createNewUser();
+            createNewUser(context);
             dismiss();
         }
     }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1054217958838",
+    "firebase_url": "https://appetizing-android.firebaseio.com",
+    "project_id": "appetizing-android",
+    "storage_bucket": "appetizing-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054217958838:android:26c0cd6521214bf9",
+        "android_client_info": {
+          "package_name": "com.blueoxgym.xixiaandroidproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054217958838-gjedog93f0vs14el05q7huvlq3fghn17.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blueoxgym.xixiaandroidproject",
+            "certificate_hash": "f352c79b6a2d5e1030268a3aadf2697be86341db"
+          }
+        },
+        {
+          "client_id": "1054217958838-a7ham06bojj0rjv6lhj166ulqruocprq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSAWb3QrD4C_6SGNZxEGyhTl2Jfz03Fms"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054217958838-a7ham06bojj0rjv6lhj166ulqruocprq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
