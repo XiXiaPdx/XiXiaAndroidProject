@@ -4,7 +4,8 @@ package com.blueoxgym.xixiaandroidproject;
 import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -21,6 +22,8 @@ import com.blueoxgym.xixiaandroidproject.Fragments.LoginFragment;
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.Services.UnSplashService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.parceler.Parcels;
 
@@ -34,9 +37,11 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.blueoxgym.xixiaandroidproject.R.id.describeFoodLayout;
+
 
 public class MainActivity extends AppCompatActivity implements OpenDescribeFragment{
+    public static final String TAG = MainActivity.class.getSimpleName();
+
     public ArrayList<Picture> mPictures = new ArrayList<>();
     @Bind(R.id.pictureRecycleView)
     RecyclerView mPictureRecycleView;
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     private PictureListAdapter mAdapter;
     private StaggeredGridLayoutManager picGridLayOut;
     private OpenDescribeFragment mOpenDescribe;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    public FirebaseAuth mAuth;
 
 
     @Override
@@ -58,9 +65,39 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mPictureRecycleView.setLayoutManager(picGridLayOut);
         Typeface righteous = Typeface.createFromAsset(getAssets(), "Fonts/Righteous-Regular.ttf");
         mAppName.setTypeface(righteous);
-
         mByLine.setTypeface(righteous);
+        createAuthStateListener();
+        mAuth = FirebaseAuth.getInstance();
 
+
+    }
+
+    public void createAuthStateListener(){
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null){
+                    Log.d(TAG, "The user is " + user.getEmail());
+                }
+
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     public void getFoodPictures(){
@@ -123,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
             return true;
         }
         if (id == R.id.action_login) {
-            Log.d("ACTION IS", "LOG IN ");
             openLoginFragment();
 
             return true;
