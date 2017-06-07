@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,7 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
     public EditText mConfirmPassword;
     public FirebaseAuth mAuth;
     public Context context;
+    public String name;
 
 
     public CreateAccountFragment() {
@@ -73,8 +76,7 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
         final String password = mPassword.getText().toString().trim();
         String confirmPassword= mConfirmPassword.getText().toString().trim();
         final String email = mEmail.getText().toString().trim();
-        String name = mName.getText().toString().trim();
-
+         name = mName.getText().toString().trim();
 
 
         mAuth.createUserWithEmailAndPassword(email,password)
@@ -85,6 +87,8 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
 
                         if (task.isSuccessful()){
                             Log.d(TAG, "Authentication successful");
+                            createFirebaseUserProfile(task.getResult().getUser());
+
                         } else {
                             Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -93,6 +97,24 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
                 });
     }
 
+    public void createFirebaseUserProfile (final FirebaseUser user){
+        UserProfileChangeRequest addProfileName = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        user.updateProfile(addProfileName)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, user.getDisplayName());
+                }
+            }
+
+        });
+
+    }
 
 
     @Override
