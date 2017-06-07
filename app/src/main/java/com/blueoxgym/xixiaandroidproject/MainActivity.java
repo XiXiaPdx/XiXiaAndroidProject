@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
-                    Log.d(TAG, "The user is " + user.getEmail());
+                   getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                 } else {
-                    Log.d(TAG, "The user logged out");
+                    getSupportActionBar().setTitle("");
 
                 }
 
