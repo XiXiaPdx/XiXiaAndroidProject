@@ -9,4 +9,5 @@ public class Constants {
     public static final String UNSPLASH_URL = "https://api.unsplash" +
             ".com/photos/random/?query=food&count=30";
     public static final String UNSPLASH_CLIENT_ID = "client_id";
+    public static final String FIREBASE_CHILD_DESCRIBED_FOODS = "describedFoods" ;
 }

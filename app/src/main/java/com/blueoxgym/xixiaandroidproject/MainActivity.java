@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +25,16 @@ import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.Services.UnSplashService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.parceler.Parcels;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -54,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     private OpenDescribeFragment mOpenDescribe;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public FirebaseAuth mAuth;
+    public ArrayList<Picture> pictures;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mByLine.setTypeface(righteous);
         mAuth = FirebaseAuth.getInstance();
         mAdapter = new PictureListAdapter();
+        pictures = new ArrayList<>();
     }
 
     public void createAuthStateListener(){
@@ -79,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 if (user != null){
                    getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                     mAdapter.showHideFoodListener();
+                    Log.d(TAG, Integer.toString(getUserFoods().size()));
                 } else {
                     getSupportActionBar().setTitle("");
                     mAdapter.showHideFoodListener();
@@ -151,14 +162,12 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         FirebaseAuth.getInstance().signOut();
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
@@ -171,6 +180,26 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public ArrayList<Picture> getUserFoods(){
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_DESCRIBED_FOODS).child(uid);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    pictures.add(snapshot.getValue(Picture.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return pictures;
     }
 
 

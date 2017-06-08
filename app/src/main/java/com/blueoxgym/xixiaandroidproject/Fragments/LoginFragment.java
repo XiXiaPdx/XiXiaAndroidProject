@@ -44,7 +44,6 @@ public class LoginFragment extends DialogFragment implements View.OnClickListene
         mLoginButton.setOnClickListener(this);
         mCreateButton.setOnClickListener(this);
 
-
         return rootView;
     }
 
