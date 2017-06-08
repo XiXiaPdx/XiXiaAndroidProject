@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
+import com.blueoxgym.xixiaandroidproject.MainActivity;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,6 +105,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         } else {
             holder.mFindFoodButton.setVisibility(View.VISIBLE);
         }
+
     }
 
     public void showHideFoodListener() {
@@ -116,6 +118,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     public int getItemCount() {
         return mPictures.size();
     }
+
+ // app loads, if user logged in, grab their described foods and place into array
 
 
 }
