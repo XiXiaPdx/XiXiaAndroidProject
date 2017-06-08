@@ -49,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     TextView mAppName;
     @Bind(R.id.byLineTextView) TextView mByLine;
     private PictureListAdapter mAdapter;
+
     private StaggeredGridLayoutManager picGridLayOut;
     private OpenDescribeFragment mOpenDescribe;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +66,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         Typeface righteous = Typeface.createFromAsset(getAssets(), "Fonts/Righteous-Regular.ttf");
         mAppName.setTypeface(righteous);
         mByLine.setTypeface(righteous);
-        createAuthStateListener();
         mAuth = FirebaseAuth.getInstance();
-
-
+        mAdapter = new PictureListAdapter();
     }
 
     public void createAuthStateListener(){
@@ -80,11 +78,11 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
                    getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
+                    mAdapter.showHideFoodListener();
                 } else {
                     getSupportActionBar().setTitle("");
-
+                    mAdapter.showHideFoodListener();
                 }
-
             }
         };
     }
@@ -92,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     @Override
     public void onStart() {
         super.onStart();
+        createAuthStateListener();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -120,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                         @Override
                         public void run() {
 
-                          mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext(), mPictures
-                                  );
+                          mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext(), mPictures);
+
                             AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
                             animateAdapter.setDuration(1500);
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
