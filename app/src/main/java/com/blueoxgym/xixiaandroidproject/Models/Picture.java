@@ -7,29 +7,37 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class Picture {
-    public String mID;
-    public String mImageUrl;
+    public String id;
+    public String imageUrl;
+    public String description;
 
     public String getID() {
-        return mID;
+        return id;
     }
-
-    public void setID(String mID) {
-        this.mID = mID;
+    public String getDescription(){
+        return description;
     }
-
     public String getImageUrl() {
-        return mImageUrl;
+        return imageUrl;
     }
 
-    public void setImageUrl(String mImageUrl) {
-        this.mImageUrl = mImageUrl;
+    public void setId(String description){
+        this.description = description;
+    }
+
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Picture () {}
 
     public Picture (String ID, String imageURL){
-        this.mID = ID;
-        this.mImageUrl = imageURL;
+        this.id = ID;
+        this.imageUrl = imageURL;
+        this.description = "";
     }
 }
