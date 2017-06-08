@@ -21,18 +21,6 @@
             android:src="@drawable/mainbg"
             />
 
-        <!--<Button-->
-            <!--android:id="@+id/findFoodButton"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_marginBottom="26dp"-->
-            <!--android:layout_marginLeft="79dp"-->
-            <!--android:layout_marginStart="79dp"-->
-            <!--android:text="Button"/>-->
-
         <ImageButton
             android:id="@+id/findFoodButton"
             android:layout_width="wrap_content"
