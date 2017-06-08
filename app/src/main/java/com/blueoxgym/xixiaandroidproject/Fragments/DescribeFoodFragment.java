@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
     private Button closeButton;
     private EditText describeEditText;
     private Button openCamera;
+    private Button searchButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -36,6 +38,8 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
         describeEditText = (EditText) rootView.findViewById(R.id.describeEditText);
         closeButton = (Button) rootView.findViewById(R.id.closeButton);
         openCamera = (Button) rootView.findViewById(R.id.openCamera);
+        searchButton = (Button) rootView.findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(this);
         openCamera.setOnClickListener(this);
         closeButton.setOnClickListener(this);
         Bundle bundle = getArguments();
@@ -57,6 +61,9 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
                     null) {
                 startActivityForResult(takePictureIntent, 1);
             }
+        }
+        if (v == searchButton ){
+            Log.d("Search", "Button Clicked");
         }
 
     }
