@@ -62,7 +62,6 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
         mLoginButton.setOnClickListener(this);
         mSubmitButton.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
-        context = getActivity();
         return rootView;
     }
 
@@ -72,7 +71,7 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
         loginFragment.show(fm, "open login fragment");
     }
 
-    public void createNewUser(final Context context){
+    public void createNewUser(){
         final String password = mPassword.getText().toString().trim();
         String confirmPassword= mConfirmPassword.getText().toString().trim();
         final String email = mEmail.getText().toString().trim();
@@ -90,7 +89,7 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
                             createFirebaseUserProfile(task.getResult().getUser());
 
                         } else {
-                            Toast.makeText(context, "Authentication failed.",
+                            Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -124,7 +123,7 @@ public class CreateAccountFragment extends DialogFragment implements View.OnClic
             openLoginFragment();
         }
         if (v == mSubmitButton){
-            createNewUser(context);
+            createNewUser();
             dismiss();
         }
     }
