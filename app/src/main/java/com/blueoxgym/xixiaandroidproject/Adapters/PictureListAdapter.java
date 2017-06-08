@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
@@ -15,6 +16,8 @@ import com.blueoxgym.xixiaandroidproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -51,6 +54,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         ImageView mPictureView;
         @Bind(R.id.findFoodButton)
         ImageButton mFindFoodButton;
+        @Bind(R.id.descriptionTextView)
+        TextView descriptionTextView;
         private Context context;
 
 
@@ -66,8 +71,10 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
 
         public void bindPicture(Picture picture) {
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
+            descriptionTextView.setText(picture.getID());
 
         }
+
 
         @Override
         public void onClick(View v) {
@@ -91,6 +98,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     @Override
     public void onBindViewHolder(PictureViewHolder holder,  int position) {
         holder.bindPicture(mPictures.get(position));
+
         if (mAuth.getCurrentUser() == null){
         holder.mFindFoodButton.setVisibility(View.INVISIBLE);
         } else {
