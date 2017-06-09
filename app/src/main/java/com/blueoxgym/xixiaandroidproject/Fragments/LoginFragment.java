@@ -1,12 +1,11 @@
 package com.blueoxgym.xixiaandroidproject.Fragments;
 
 
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.app.DialogFragment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,18 +61,14 @@ public class LoginFragment extends DialogFragment implements View.OnClickListene
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        dismiss();
                         if (task.isSuccessful()) {
-                            Log.d("Login Fragment", "signInWithEmail:onComplete:" + task.isSuccessful());
-                            dismiss();
                         } else {
-                            Log.w("Login Fragment", "signInWithEmail", task.getException());
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
-
     }
 
 

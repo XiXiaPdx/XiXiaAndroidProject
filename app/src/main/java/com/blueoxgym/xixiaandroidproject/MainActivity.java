@@ -4,13 +4,10 @@ package com.blueoxgym.xixiaandroidproject;
 import android.app.FragmentManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
-
-
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.parceler.Parcels;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -61,15 +57,14 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     private OpenDescribeFragment mOpenDescribe;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public FirebaseAuth mAuth;
-    public ArrayList<Picture> pictures;
-
+    public ArrayList<Picture> userFoods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        getFoodPictures();
+        userFoods = new ArrayList<>();
         picGridLayOut = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mPictureRecycleView.setLayoutManager(picGridLayOut);
         Typeface righteous = Typeface.createFromAsset(getAssets(), "Fonts/Righteous-Regular.ttf");
@@ -77,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mByLine.setTypeface(righteous);
         mAuth = FirebaseAuth.getInstance();
         mAdapter = new PictureListAdapter();
-        pictures = new ArrayList<>();
+        getFoodPictures();
+
     }
 
     public void createAuthStateListener(){
@@ -89,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 if (user != null){
                    getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                     mAdapter.showHideFoodListener();
-                    Log.d(TAG, Integer.toString(getUserFoods().size()));
+                    getUserFoods();
                 } else {
                     getSupportActionBar().setTitle("");
                     mAdapter.showHideFoodListener();
@@ -129,8 +125,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
-                          mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext(), mPictures);
+                          mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
+                                  (), mPictures, userFoods);
 
                             AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
                             animateAdapter.setDuration(1500);
@@ -182,25 +178,19 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         return super.onOptionsItemSelected(item);
     }
 
-    public ArrayList<Picture> getUserFoods(){
-
+    public void getUserFoods(){
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_DESCRIBED_FOODS).child(uid);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    pictures.add(snapshot.getValue(Picture.class));
+                    userFoods.add(snapshot.getValue(Picture.class));
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-        return pictures;
     }
-
-
 }
