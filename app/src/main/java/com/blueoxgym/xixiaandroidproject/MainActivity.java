@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +43,7 @@ import okhttp3.Response;
 
 
 
-public class MainActivity extends AppCompatActivity implements OpenDescribeFragment{
+public class MainActivity extends AppCompatActivity implements OpenDescribeFragment {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     public ArrayList<Picture> mPictures = new ArrayList<>();
@@ -72,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mByLine.setTypeface(righteous);
         mAuth = FirebaseAuth.getInstance();
         mAdapter = new PictureListAdapter();
-        getFoodPictures();
-
+        createAuthStateListener();
     }
 
     public void createAuthStateListener(){
@@ -81,11 +81,12 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.d("mAuthListener Call", "Calling it");
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
-                   getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
-                    mAdapter.showHideFoodListener();
                     getUserFoods();
+                    getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
+                    mAdapter.showHideFoodListener();
                 } else {
                     getSupportActionBar().setTitle("");
                     mAdapter.showHideFoodListener();
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     @Override
     public void onStart() {
         super.onStart();
-        createAuthStateListener();
+        getFoodPictures();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -178,15 +179,19 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         return super.onOptionsItemSelected(item);
     }
 
+
     public void getUserFoods(){
+        final ArrayList<Picture> tempUserFoods = new ArrayList<>();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_DESCRIBED_FOODS).child(uid);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("Snapshot", dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    userFoods.add(snapshot.getValue(Picture.class));
+                    tempUserFoods.add(snapshot.getValue(Picture.class));
                 }
+                userFoods = tempUserFoods;
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -62,13 +62,19 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         }
 
         public void bindPicture(Picture picture) {
-            Log.d("From Main", mUserFoods.toString());
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
-//            descriptionTextView.setText(picture.getDescription());
-            descriptionTextView.setText(mUserFoods.get(0).getDescription());
+            Log.d("Size of User Foods", Integer.toString(mUserFoods.size()));
+            if (mAuth.getCurrentUser() == null){
+                mFindFoodButton.setVisibility(View.INVISIBLE);
+                descriptionTextView.setText("");
+            } else {
+                mFindFoodButton.setVisibility(View.VISIBLE);
+                if (mUserFoods.size()>0) {
+                    descriptionTextView.setText(mUserFoods.get(0).getDescription());
+                }
+            }
 
         }
-
 
         @Override
         public void onClick(View v) {
@@ -88,12 +94,6 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     @Override
     public void onBindViewHolder(PictureViewHolder holder,  int position) {
         holder.bindPicture(mPictures.get(position));
-        if (mAuth.getCurrentUser() == null){
-        holder.mFindFoodButton.setVisibility(View.INVISIBLE);
-        } else {
-            holder.mFindFoodButton.setVisibility(View.VISIBLE);
-        }
-
     }
 
     public void showHideFoodListener() {
