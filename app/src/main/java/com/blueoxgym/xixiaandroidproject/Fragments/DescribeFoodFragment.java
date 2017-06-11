@@ -34,6 +34,7 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
     private Button openCamera;
     private Button searchButton;
     private Picture picture;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -84,6 +85,8 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
             picture.setPushId(pushId);
             picture.setDescription(description);
             pushRef.setValue(picture);
+//            MainActivity main = new MainActivity();
+//            main.getUserFoods();
             dismiss();
         }
 
