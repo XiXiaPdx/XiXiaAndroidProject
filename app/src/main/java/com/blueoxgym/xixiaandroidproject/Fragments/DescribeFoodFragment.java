@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.blueoxgym.xixiaandroidproject.Constants;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
@@ -34,6 +34,7 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
     private Button openCamera;
     private Button searchButton;
     private Picture picture;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -69,6 +70,8 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
             }
         }
         if (v == searchButton ){
+            Toast.makeText(getActivity(), "Description Saved!",
+                    Toast.LENGTH_SHORT).show();
             String description = describeEditText.getText().toString();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String uid = user.getUid();
@@ -82,7 +85,9 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
             picture.setPushId(pushId);
             picture.setDescription(description);
             pushRef.setValue(picture);
-
+//            MainActivity main = new MainActivity();
+//            main.getUserFoods();
+            dismiss();
         }
 
     }

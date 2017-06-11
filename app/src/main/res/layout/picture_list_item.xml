@@ -42,10 +42,10 @@
             android:layout_alignParentTop="true"
             android:background="@color/colorPrimaryDark"
             android:text="description"
-            android:textAlignment="textEnd"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@color/cardview_light_background"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
 
     </RelativeLayout>

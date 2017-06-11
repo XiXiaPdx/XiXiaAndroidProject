@@ -175,16 +175,15 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
 
     public void getUserFoods(){
-        final ArrayList<Picture> tempUserFoods = new ArrayList<>();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_DESCRIBED_FOODS).child(uid);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                final ArrayList<Picture> tempUserFoods = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     tempUserFoods.add(snapshot.getValue(Picture.class));
                 }
-                Log.d("User Food In Adapter", mAdapter.mUserFoods.toString());
                 Log.d("Snapshot", dataSnapshot.toString());
                 mAdapter.showHideFoodListener(tempUserFoods);
             }
