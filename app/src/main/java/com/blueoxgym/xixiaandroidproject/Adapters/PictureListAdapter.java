@@ -30,17 +30,16 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     private Context mContext;
     private OpenDescribeFragment mOpenDescribe;
     public FirebaseAuth mAuth;
-    public ArrayList<Picture> mUserFoods;
+    public ArrayList<Picture> mUserFoods = new ArrayList<>();
 
     public PictureListAdapter() { }
 
     public PictureListAdapter (OpenDescribeFragment listener, Context context, ArrayList<Picture>
-            pictures, ArrayList<Picture> userFoods){
+            pictures){
         super ();
         mOpenDescribe = listener;
         mContext = context;
         mPictures = pictures;
-        mUserFoods = userFoods;
     }
 
     public class PictureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -63,26 +62,33 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
 
         public void bindPicture(Picture picture) {
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
-            Log.d("Size of User Foods", Integer.toString(mUserFoods.size()));
             if (mAuth.getCurrentUser() == null){
                 mFindFoodButton.setVisibility(View.INVISIBLE);
                 descriptionTextView.setText("");
             } else {
                 mFindFoodButton.setVisibility(View.VISIBLE);
-                if (mUserFoods.size()>0) {
-                    descriptionTextView.setText(mUserFoods.get(0).getDescription());
+                if (mUserFoods.size() > 0) {
+                    String searchID = picture.getID();
+                    descriptionTextView.setText(matchCheck(searchID));
+               }
+            }
+        }
+        public String matchCheck (String searchID){
+            String resultDescription="";
+            for(Picture userFood: mUserFoods){
+                if( userFood.getID().equals(searchID)){
+                    resultDescription = userFood.getDescription();
+                    break;
                 }
             }
-
+            return resultDescription;
         }
-
         @Override
         public void onClick(View v) {
             if(v == mFindFoodButton) {
                 mOpenDescribe.openDescribeFragment(v, mPictures.get(getAdapterPosition()));
             }
         }
-
     }
     @Override
     public PictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -94,9 +100,14 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     @Override
     public void onBindViewHolder(PictureViewHolder holder,  int position) {
         holder.bindPicture(mPictures.get(position));
+        if(mUserFoods != null) {
+            Log.d("Size of User Foods", Integer.toString(mUserFoods.size()));
+        }
     }
 
-    public void showHideFoodListener() {
+    public void showHideFoodListener(ArrayList<Picture> userFoods) {
+        Log.d("Reseting REcycler View", "NOW");
+        mUserFoods = userFoods;
         notifyDataSetChanged();
     }
 

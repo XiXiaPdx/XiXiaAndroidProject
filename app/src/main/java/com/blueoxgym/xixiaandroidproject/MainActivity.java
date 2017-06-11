@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mAuth = FirebaseAuth.getInstance();
         mAdapter = new PictureListAdapter();
         createAuthStateListener();
+        getFoodPictures();
     }
 
     public void createAuthStateListener(){
@@ -81,15 +82,13 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                Log.d("mAuthListener Call", "Calling it");
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
-                    getUserFoods();
                     getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
-                    mAdapter.showHideFoodListener();
+                    getUserFoods();
                 } else {
                     getSupportActionBar().setTitle("");
-                    mAdapter.showHideFoodListener();
+                    mAdapter.showHideFoodListener(userFoods);
                 }
             }
         };
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     @Override
     public void onStart() {
         super.onStart();
-        getFoodPictures();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -116,19 +114,15 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         unSplashService.getPictures(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
-
             @Override
             public void onResponse(Call call, Response response) {
-
                      mPictures = unSplashService.processResults(response);
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                           mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
-                                  (), mPictures, userFoods);
-
+                                  (), mPictures);
                             AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
                             animateAdapter.setDuration(1500);
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
@@ -187,11 +181,12 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("Snapshot", dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     tempUserFoods.add(snapshot.getValue(Picture.class));
                 }
-                userFoods = tempUserFoods;
+                Log.d("User Food In Adapter", mAdapter.mUserFoods.toString());
+                Log.d("Snapshot", dataSnapshot.toString());
+                mAdapter.showHideFoodListener(tempUserFoods);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

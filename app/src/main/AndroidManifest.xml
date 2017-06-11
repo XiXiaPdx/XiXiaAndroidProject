@@ -22,10 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-                  android:label="@string/title_activity_login"
-                  android:theme="@style/LoginTheme" >
-        </activity>
         <activity android:name=".RestaurantsActivity">
         </activity>
     </application>
