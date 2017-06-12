@@ -106,8 +106,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     }
 
     public void showHideFoodListener(ArrayList<Picture> userFoods) {
-        Log.d("Reseting REcycler View", "NOW");
         mUserFoods = userFoods;
+        Log.d("Reseting REcycler View", "NOW NOW" + mUserFoods.toString());
         notifyDataSetChanged();
     }
 

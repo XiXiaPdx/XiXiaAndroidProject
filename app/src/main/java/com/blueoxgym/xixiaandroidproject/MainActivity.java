@@ -20,6 +20,7 @@ import com.blueoxgym.xixiaandroidproject.Fragments.DescribeFoodFragment;
 import com.blueoxgym.xixiaandroidproject.Fragments.LoginFragment;
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
+import com.blueoxgym.xixiaandroidproject.Services.EndlessRecyclerViewScrollListener;
 import com.blueoxgym.xixiaandroidproject.Services.UnSplashService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,18 +54,20 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     TextView mAppName;
     @Bind(R.id.byLineTextView) TextView mByLine;
     private PictureListAdapter mAdapter;
-
+    private EndlessRecyclerViewScrollListener scrollListener;
     private StaggeredGridLayoutManager picGridLayOut;
     private OpenDescribeFragment mOpenDescribe;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public FirebaseAuth mAuth;
     public ArrayList<Picture> userFoods;
+    public UnSplashService unSplashService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        unSplashService = new UnSplashService();
         userFoods = new ArrayList<>();
         picGridLayOut = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mPictureRecycleView.setLayoutManager(picGridLayOut);
@@ -75,6 +78,36 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mAdapter = new PictureListAdapter();
         createAuthStateListener();
         getFoodPictures();
+        scrollListener = new EndlessRecyclerViewScrollListener(picGridLayOut) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                    loadNextDataFromApi(page);
+
+            }
+        };
+        mPictureRecycleView.addOnScrollListener(scrollListener);
+    }
+
+    public void loadNextDataFromApi(int page) {
+        Log.d("Loading More", "ENDLESS ENDLESS");
+//        unSplashService.getPictures(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//                mPictures.addAll(unSplashService.processResults(response));
+//                MainActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mAdapter.showHideFoodListener(mPictures);
+//                    }
+//                });
+//            }
+//        });
     }
 
     public void createAuthStateListener(){
@@ -87,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                     getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                     getUserFoods();
                 } else {
+                    Log.d("Not Logged In", "FIRING FIRING");
+
                     getSupportActionBar().setTitle("");
                     mAdapter.showHideFoodListener(userFoods);
                 }
@@ -110,16 +145,15 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
     public void getFoodPictures(){
         mOpenDescribe = this;
-        final UnSplashService unSplashService = new UnSplashService();
         unSplashService.getPictures(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
             @Override
             public void onResponse(Call call, Response response) {
-                     mPictures = unSplashService.processResults(response);
-                     MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
+                mPictures.addAll( unSplashService.processResults(response));
+                MainActivity.this.runOnUiThread(new Runnable() {
+                         @Override
                         public void run() {
                           mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
                                   (), mPictures);
@@ -184,7 +218,6 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     tempUserFoods.add(snapshot.getValue(Picture.class));
                 }
-                Log.d("Snapshot", dataSnapshot.toString());
                 mAdapter.showHideFoodListener(tempUserFoods);
             }
             @Override
