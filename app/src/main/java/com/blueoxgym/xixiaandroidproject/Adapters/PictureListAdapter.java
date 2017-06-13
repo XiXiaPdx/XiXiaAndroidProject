@@ -62,7 +62,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
 
         public void bindPicture(Picture picture) {
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
-            if (mAuth.getCurrentUser() == null){
+            if (mAuth.getCurrentUser() == null ){
                 mFindFoodButton.setVisibility(View.INVISIBLE);
                 descriptionTextView.setText("");
             } else {
@@ -70,7 +70,10 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
                 if (mUserFoods.size() > 0) {
                     String searchID = picture.getID();
                     descriptionTextView.setText(matchCheck(searchID));
-               }
+               } else {
+                    descriptionTextView.setText("");
+
+                }
             }
         }
         public String matchCheck (String searchID){

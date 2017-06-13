@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadingFoodsProgressDialog();
-
+getFoodPictures();
         unSplashService = new UnSplashService();
         userFoods = new ArrayList<>();
         picGridLayOut = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -87,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         mAuth = FirebaseAuth.getInstance();
         mAdapter = new PictureListAdapter();
         createAuthStateListener();
-        getFoodPictures();
         scrollListener = new EndlessRecyclerViewScrollListener(picGridLayOut) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -101,23 +101,26 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     }
 
     public void loadNextDataFromApi(int page) {
-        Log.d("Loading More", "ENDLESS ENDLESS");
-//        unSplashService.getPictures(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) {
-//                mPictures.addAll(unSplashService.processResults(response));
-//                MainActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mAdapter.showHideFoodListener(mPictures);
-//                    }
-//                });
-//            }
-//        });
+        Log.d("Endless", "ENDLESS ENDLESS ENDLESS");
+        mLoadingFoodsDialog.show();
+        unSplashService.getPictures(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mPictures.addAll(unSplashService.processResults(response));
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.showHideFoodListener(mPictures);
+                    }
+                });
+                mLoadingFoodsDialog.dismiss();
+            }
+        });
     }
 
     public void createAuthStateListener(){
@@ -127,8 +130,8 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null){
+                    thread();
                     getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
-                    getUserFoods();
                     mByLine.animate().translationY(-400).withLayer();
                     mLoginInstruction.animate().translationY(-500).withLayer();
                     mPictureRecycleView.animate().translationY(-200).withLayer();
@@ -157,7 +160,23 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     @Override
     public void onStart() {
         super.onStart();
+
         mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    public void thread () {
+        Thread background = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e){
+
+                }
+                getUserFoods();
+            }
+        });
+        background.start();
     }
 
     @Override
@@ -179,15 +198,20 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
             @Override
             public void onResponse(Call call, Response response) {
                 mPictures.addAll( unSplashService.processResults(response));
+
                 MainActivity.this.runOnUiThread(new Runnable() {
                          @Override
                         public void run() {
-                          mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
+                             mAdapter.setHasStableIds(true);
+
+                             mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
                                   (), mPictures);
                             AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
                             animateAdapter.setDuration(1500);
+
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
                             mPictureRecycleView.setHasFixedSize(true);
+                             mPictureRecycleView.getItemAnimator().setChangeDuration(0);
                              mLoadingFoodsDialog.dismiss();
 
                          }
@@ -195,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 }
             });
     }
+
 
 
     public void openDescribeFragment(View v, Picture picture) {
