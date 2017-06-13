@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -179,13 +180,16 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
             @Override
             public void onResponse(Call call, Response response) {
                 mPictures.addAll( unSplashService.processResults(response));
+
                 MainActivity.this.runOnUiThread(new Runnable() {
                          @Override
                         public void run() {
-                          mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
+
+                             mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
                                   (), mPictures);
                             AlphaInAnimationAdapter animateAdapter = new AlphaInAnimationAdapter(mAdapter);
                             animateAdapter.setDuration(1500);
+
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
                             mPictureRecycleView.setHasFixedSize(true);
                              mLoadingFoodsDialog.dismiss();
