@@ -1,6 +1,8 @@
 package com.blueoxgym.xixiaandroidproject;
 
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
@@ -15,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadingFoodsProgressDialog();
+
         unSplashService = new UnSplashService();
         userFoods = new ArrayList<>();
         picGridLayOut = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -124,24 +129,20 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 if (user != null){
                     getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                     getUserFoods();
-                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)mPictureRecycleView.getLayoutParams();
-                    params.topMargin = 10;
-                    mPictureRecycleView.setLayoutParams(params);
-                    mPictureRecycleView.getLayoutParams().height=2000;
-                    mAppName.setVisibility(View.INVISIBLE);
-                    mByLine.setVisibility(View.INVISIBLE);
-                    mLoginInstruction.setVisibility(View.INVISIBLE);
-
+                    mAppName.animate().translationY(-300).withLayer();
+                    mByLine.animate().translationY(-400).withLayer();
+                    mLoginInstruction.animate().translationY(-500).withLayer();
+                    mPictureRecycleView.animate().translationY(-400).withLayer();
 
                 } else {
                     Log.d("Not Logged In", "FIRING FIRING");
                     getSupportActionBar().setTitle("");
-                    mAppName.setVisibility(View.VISIBLE);
-                    mByLine.setVisibility(View.VISIBLE);
-                    mLoginInstruction.setVisibility(View.VISIBLE);
-                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)mPictureRecycleView.getLayoutParams();
-                    params.topMargin = 600;
-                    mPictureRecycleView.setLayoutParams(params);
+
+                    mAppName.animate().translationY(30).withLayer();
+                    mByLine.animate().translationY(35).withLayer();
+
+                    mLoginInstruction.animate().translationY(6).withLayer();
+                    mPictureRecycleView.animate().translationY(0).withLayer();
                     mAdapter.showHideFoodListener(userFoods);
                 }
             }
