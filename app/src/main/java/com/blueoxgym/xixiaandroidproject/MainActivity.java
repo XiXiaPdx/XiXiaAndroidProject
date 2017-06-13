@@ -101,22 +101,26 @@ getFoodPictures();
     }
 
     public void loadNextDataFromApi(int page) {
-//        unSplashService.getPictures(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) {
-//                mPictures.addAll(unSplashService.processResults(response));
-//                MainActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mAdapter.showHideFoodListener(mPictures);
-//                    }
-//                });
-//            }
-//        });
+        Log.d("Endless", "ENDLESS ENDLESS ENDLESS");
+        mLoadingFoodsDialog.show();
+        unSplashService.getPictures(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mPictures.addAll(unSplashService.processResults(response));
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.showHideFoodListener(mPictures);
+                    }
+                });
+                mLoadingFoodsDialog.dismiss();
+            }
+        });
     }
 
     public void createAuthStateListener(){
@@ -195,11 +199,10 @@ getFoodPictures();
             public void onResponse(Call call, Response response) {
                 mPictures.addAll( unSplashService.processResults(response));
 
-
-
                 MainActivity.this.runOnUiThread(new Runnable() {
                          @Override
                         public void run() {
+                             mAdapter.setHasStableIds(true);
 
                              mAdapter = new PictureListAdapter(mOpenDescribe, getApplicationContext
                                   (), mPictures);
@@ -208,6 +211,7 @@ getFoodPictures();
 
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
                             mPictureRecycleView.setHasFixedSize(true);
+                             mPictureRecycleView.getItemAnimator().setChangeDuration(0);
                              mLoadingFoodsDialog.dismiss();
 
                          }

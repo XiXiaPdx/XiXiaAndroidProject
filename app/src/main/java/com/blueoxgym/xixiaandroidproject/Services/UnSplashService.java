@@ -1,5 +1,7 @@
 package com.blueoxgym.xixiaandroidproject.Services;
 
+import android.util.Log;
+
 import com.blueoxgym.xixiaandroidproject.Constants;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 
@@ -49,6 +51,8 @@ public class UnSplashService {
                     pictures.add(picture);
                 }
             }
+            Log.d("PROCESS", "PROCESSED PROCEESESD" );
+
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
