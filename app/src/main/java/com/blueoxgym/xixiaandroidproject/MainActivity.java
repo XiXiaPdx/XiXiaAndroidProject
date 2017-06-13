@@ -129,21 +129,20 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 if (user != null){
                     getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                     getUserFoods();
-                    mAppName.animate().translationY(-300).withLayer();
                     mByLine.animate().translationY(-400).withLayer();
                     mLoginInstruction.animate().translationY(-500).withLayer();
-                    mPictureRecycleView.animate().translationY(-400).withLayer();
+                    mPictureRecycleView.animate().translationY(-200).withLayer();
 
                 } else {
                     Log.d("Not Logged In", "FIRING FIRING");
                     getSupportActionBar().setTitle("");
 
-                    mAppName.animate().translationY(30).withLayer();
                     mByLine.animate().translationY(35).withLayer();
-
                     mLoginInstruction.animate().translationY(6).withLayer();
                     mPictureRecycleView.animate().translationY(0).withLayer();
                     mAdapter.showHideFoodListener(userFoods);
+                    mAppName.setVisibility(View.VISIBLE);
+
                 }
             }
         };
@@ -247,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     tempUserFoods.add(snapshot.getValue(Picture.class));
                 }
+                Log.d("SNAPSHOT SNAPSHOT", dataSnapshot.toString());
                 mAdapter.showHideFoodListener(tempUserFoods);
             }
             @Override
