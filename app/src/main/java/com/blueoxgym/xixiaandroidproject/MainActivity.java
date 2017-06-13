@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
     @Bind(R.id.appNameTextView)
     TextView mAppName;
     @Bind(R.id.byLineTextView) TextView mByLine;
+    @Bind(R.id.textView) TextView mLoginInstruction;
     private PictureListAdapter mAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private StaggeredGridLayoutManager picGridLayOut;
@@ -122,10 +124,24 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                 if (user != null){
                     getSupportActionBar().setTitle(user.getDisplayName()+", you hungry?");
                     getUserFoods();
+                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)mPictureRecycleView.getLayoutParams();
+                    params.topMargin = 10;
+                    mPictureRecycleView.setLayoutParams(params);
+                    mPictureRecycleView.getLayoutParams().height=2000;
+                    mAppName.setVisibility(View.INVISIBLE);
+                    mByLine.setVisibility(View.INVISIBLE);
+                    mLoginInstruction.setVisibility(View.INVISIBLE);
+
+
                 } else {
                     Log.d("Not Logged In", "FIRING FIRING");
-
                     getSupportActionBar().setTitle("");
+                    mAppName.setVisibility(View.VISIBLE);
+                    mByLine.setVisibility(View.VISIBLE);
+                    mLoginInstruction.setVisibility(View.VISIBLE);
+                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)mPictureRecycleView.getLayoutParams();
+                    params.topMargin = 600;
+                    mPictureRecycleView.setLayoutParams(params);
                     mAdapter.showHideFoodListener(userFoods);
                 }
             }
