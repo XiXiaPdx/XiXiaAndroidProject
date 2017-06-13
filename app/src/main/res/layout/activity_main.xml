@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.blueoxgym.xixiaandroidproject.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/pictureRecycleView"
-        android:layout_width="0dp"
-        android:layout_height="551dp"
-        android:layout_marginTop="120dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <TextView
         android:id="@+id/appNameTextView"
         android:layout_width="wrap_content"
@@ -24,7 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
         android:text="Appetizing"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
@@ -32,7 +22,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"/>
+        app:layout_constraintHorizontal_bias="0.392"/>
 
     <TextView
         android:id="@+id/byLineTextView"
@@ -48,4 +38,31 @@
         android:textStyle="italic"
         app:layout_constraintLeft_toLeftOf="@+id/appNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/appNameTextView"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Please Log In To Search"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/pictureRecycleView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/byLineTextView" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pictureRecycleView"
+        android:layout_width="382dp"
+        android:layout_height="466dp"
+        android:layout_marginTop="130dp"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>
