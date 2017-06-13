@@ -47,16 +47,19 @@ UnSpash has hi-quality, current, food photos.  You can get random photos from th
 - [x] 1. Use UnSplash to get random photo stream.
 - [x] 2. Put "Search" Icon on each picture.
 - [x] 3. Clicking "Search" opens a modal Fragment with - [ larger sized picture.
-- [ ] 4. Below picture will have input field asking the user to describe the dish they see in the picture.
+- [x] 4. Below picture will have input field asking the user to describe the dish they see in the picture.
 - [x] 5. Below input field, 3 buttons.
 - [x] Close modal
     * This closes the modal, goes back to main picture stream.
 - [ ]  * Search Restaurants
     * This uses their description to search Yelp API Activity for food.
-- [ ]  * Search Similar Dishes
-    * This users their description to search Yummly API for recipes. Opens new activity to show refined search.  Yummly has all food labeled so photos will be labeled with food name and can clicked on to search Yelp.
+- [x] Save a user's described foods to database.
+- [x] RecyclerView of random foods will reference current user Described foods. If match, pull user description and label the food on RecyclerView.
 
+#### Bugs, Problems.
 
+1. Firebase issues - multiple unexplained calls when it only should be one.
+2.  Async issue.  RecyclerView sets pictures BEFORE Firebase Database call finishes. This causes all labels to say "Description". 
 
 
 # Technologies

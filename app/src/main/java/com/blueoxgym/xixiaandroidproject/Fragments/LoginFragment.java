@@ -63,6 +63,8 @@ public class LoginFragment extends DialogFragment implements View.OnClickListene
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         dismiss();
                         if (task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "Successful!",
+                                    Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

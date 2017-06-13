@@ -2,6 +2,7 @@ package com.blueoxgym.xixiaandroidproject;
 
 
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,6 +47,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OpenDescribeFragment {
     public static final String TAG = MainActivity.class.getSimpleName();
+    private ProgressDialog mLoadingFoodsDialog;
 
     public ArrayList<Picture> mPictures = new ArrayList<>();
     @Bind(R.id.pictureRecycleView)
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        loadingFoodsProgressDialog();
         unSplashService = new UnSplashService();
         userFoods = new ArrayList<>();
         picGridLayOut = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -129,6 +132,12 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         };
     }
 
+    private void loadingFoodsProgressDialog(){
+        mLoadingFoodsDialog = new ProgressDialog(this);
+        mLoadingFoodsDialog.setTitle("Creating your menu...");
+        mLoadingFoodsDialog.setCancelable(false);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -145,7 +154,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
 
     public void getFoodPictures(){
         mOpenDescribe = this;
+        mLoadingFoodsDialog.show();
         unSplashService.getPictures(new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -161,7 +172,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
                             animateAdapter.setDuration(1500);
                             mPictureRecycleView.setAdapter(new AlphaInAnimationAdapter(animateAdapter));
                             mPictureRecycleView.setHasFixedSize(true);
-                        }
+                             mLoadingFoodsDialog.dismiss();
+
+                         }
                     });
                 }
             });
@@ -201,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         }
         if (id == R.id.action_login) {
             openLoginFragment();
-
             return true;
         }
         return super.onOptionsItemSelected(item);

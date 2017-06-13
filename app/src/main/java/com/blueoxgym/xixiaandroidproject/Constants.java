@@ -10,4 +10,6 @@ public class Constants {
             ".com/photos/random/?query=food&count=30";
     public static final String UNSPLASH_CLIENT_ID = "client_id";
     public static final String FIREBASE_CHILD_DESCRIBED_FOODS = "describedFoods" ;
+    public static final String LAST_FOOD_SEARCH = "search";
+
 }

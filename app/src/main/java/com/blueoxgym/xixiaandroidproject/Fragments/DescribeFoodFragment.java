@@ -3,8 +3,11 @@ package com.blueoxgym.xixiaandroidproject.Fragments;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.blueoxgym.xixiaandroidproject.Constants;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.R;
+import com.blueoxgym.xixiaandroidproject.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +38,8 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
     private Button openCamera;
     private Button searchButton;
     private Picture picture;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -49,6 +55,8 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
         searchButton.setOnClickListener(this);
         openCamera.setOnClickListener(this);
         closeButton.setOnClickListener(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mEditor = mSharedPreferences.edit();
         Bundle bundle = getArguments();
         picture = Parcels.unwrap(bundle.getParcelable("picture"));
         Picasso.with(context).load(picture.getImageUrl()).into(describePictureView);
@@ -73,6 +81,7 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
             Toast.makeText(getActivity(), "Description Saved!",
                     Toast.LENGTH_SHORT).show();
             String description = describeEditText.getText().toString();
+            addToSharedPreferences(description);
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String uid = user.getUid();
             DatabaseReference restaurantRef = FirebaseDatabase
@@ -85,8 +94,9 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
             picture.setPushId(pushId);
             picture.setDescription(description);
             pushRef.setValue(picture);
-//            MainActivity main = new MainActivity();
-//            main.getUserFoods();
+
+            Intent intent = new Intent (getActivity(), SearchActivity.class);
+            startActivity(intent);
             dismiss();
         }
 
@@ -104,5 +114,9 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
             valid = true;
         }
         return valid;
+    }
+
+    private void addToSharedPreferences(String description) {
+        mEditor.putString(Constants.LAST_FOOD_SEARCH, description).apply();
     }
 }
