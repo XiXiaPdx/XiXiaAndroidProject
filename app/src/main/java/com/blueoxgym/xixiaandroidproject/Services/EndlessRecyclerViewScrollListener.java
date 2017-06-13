@@ -50,10 +50,10 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(null);
         // get maximum element within the list
         lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions);
-        Log.d("LOADING", Boolean.toString(loading));
-        Log.d("Previous Item Count", Integer.toString(previousTotalItemCount));
-        Log.d("Total Item Count", Integer.toString(totalItemCount));
-        Log.d("Last Visible", Integer.toString(lastVisibleItemPosition));
+//        Log.d("LOADING", Boolean.toString(loading));
+//        Log.d("Previous Item Count", Integer.toString(previousTotalItemCount));
+//        Log.d("Total Item Count", Integer.toString(totalItemCount));
+//        Log.d("Last Visible", Integer.toString(lastVisibleItemPosition));
 
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
