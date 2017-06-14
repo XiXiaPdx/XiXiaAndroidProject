@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Fragments.RestaurantListFragment;
@@ -34,7 +35,7 @@ public class SearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mDisplayPosition.setText("You want to search for " + mSharedPreferences.getString(Constants.LAST_FOOD_SEARCH, null));
-        getRestaurants(location);
+        getRestaurants(mSharedPreferences.getString(Constants.LAST_FOOD_SEARCH, null));
     }
 
     public void loadFragment(){
@@ -44,10 +45,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    public void getRestaurants(String location) {
+    public void getRestaurants(String food) {
+        Log.d("FOod to search", food);
+
         final YelpService yelpService = new YelpService();
 
-        yelpService.findRestaurants(location, new Callback() {
+        yelpService.findRestaurants(food, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
