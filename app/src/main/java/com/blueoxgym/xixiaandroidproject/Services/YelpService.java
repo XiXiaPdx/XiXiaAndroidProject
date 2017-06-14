@@ -1,5 +1,7 @@
 package com.blueoxgym.xixiaandroidproject.Services;
 
+import android.util.Log;
+
 import com.blueoxgym.xixiaandroidproject.Constants;
 import com.blueoxgym.xixiaandroidproject.Models.Restaurant;
 
@@ -33,8 +35,9 @@ public class YelpService {
                 .build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.YELP_BASE_URL).newBuilder();
-        urlBuilder.addQueryParameter(Constants.YELP_LOCATION_QUERY_PARAMETER, location);
+        urlBuilder.addQueryParameter(Constants.YELP_FOOD_QUERY_PARAMETER, location);
         String url = urlBuilder.build().toString();
+        Log.d("SEARCH STRING", url.toString());
 
         Request request = new Request.Builder()
                 .url(url)
