@@ -51,7 +51,6 @@ public class UnSplashService {
                     pictures.add(picture);
                 }
             }
-            Log.d("PROCESS", "PROCESSED PROCEESESD" );
 
         } catch (JSONException e) {
             e.printStackTrace();
