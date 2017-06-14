@@ -59,7 +59,7 @@ UnSpash has hi-quality, current, food photos.  You can get random photos from th
 #### Bugs, Problems.
 
 1. Firebase issues - multiple unexplained calls when it only should be one.
-2.  Async issue.  RecyclerView sets pictures BEFORE Firebase Database call finishes. This causes all labels to say "Description". 
+2.  Async issue.  RecyclerView sets pictures BEFORE Firebase Database call finishes. This causes all labels to say "Description".
 
 
 # Technologies
@@ -112,10 +112,10 @@ UnSplashId = "Your Client ID From UnSplash Goes Here!!!"
 
 ### Login Details
 
-email is "perry@me.com"
-password is "hello"
+email is "yes@me.com"
+password is "123456"
 
-The Login Activity is not finalized. Currently, it does show form validation for the purpose of the assignment.
+This login has many food pictures already described. When your random pictures loads, it is highly likely you'll see descriptions on certain food pictures. 
 
 
 ## Further Exploration
