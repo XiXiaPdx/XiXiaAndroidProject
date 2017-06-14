@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OpenDescribeFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         loadingFoodsProgressDialog();
 getFoodPictures();
         unSplashService = new UnSplashService();
@@ -85,6 +88,7 @@ getFoodPictures();
         Typeface righteous = Typeface.createFromAsset(getAssets(), "Fonts/Righteous-Regular.ttf");
         mAppName.setTypeface(righteous);
         mByLine.setTypeface(righteous);
+        mLoginInstruction.setTypeface(righteous);
         mAuth = FirebaseAuth.getInstance();
         mAdapter = new PictureListAdapter();
         createAuthStateListener();
@@ -101,7 +105,6 @@ getFoodPictures();
     }
 
     public void loadNextDataFromApi(int page) {
-        Log.d("Endless", "ENDLESS ENDLESS ENDLESS");
         mLoadingFoodsDialog.show();
         unSplashService.getPictures(new Callback() {
             @Override
@@ -137,7 +140,6 @@ getFoodPictures();
                     mPictureRecycleView.animate().translationY(-200).withLayer();
 
                 } else {
-                    Log.d("Not Logged In", "FIRING FIRING");
                     getSupportActionBar().setTitle("");
 
                     mByLine.animate().translationY(35).withLayer();
