@@ -25,22 +25,24 @@ import butterknife.ButterKnife;
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
     private ArrayList<Restaurant> mRestaurants = new ArrayList<>();
     private Context mContext;
-    private static final int MAX_WIDTH = 200;
-    private static final int MAX_HEIGHT = 200;
-    @Bind(R.id.restaurantImage)
-    ImageView mImage;
-    @Bind (R.id.restaurantName)
-    TextView mName;
+    private static final int MAX_WIDTH = 500;
+    private static final int MAX_HEIGHT = 500;
+
 
     public RestaurantListAdapter(Context context, ArrayList<Restaurant> restaurants) {
         mContext = context;
         mRestaurants = restaurants;
+        Log.d("IN ADAPTEr", restaurants.toString());
     }
 
 
     public class RestaurantViewHolder extends RecyclerView.ViewHolder{
 
         private Context mContext;
+        @Bind(R.id.restaurantImage)
+        ImageView mImage;
+        @Bind (R.id.restaurantName)
+        TextView mName;
 
         public RestaurantViewHolder(View itemView) {
             super(itemView);
