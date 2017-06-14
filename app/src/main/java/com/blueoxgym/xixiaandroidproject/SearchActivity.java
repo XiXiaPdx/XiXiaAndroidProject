@@ -35,12 +35,11 @@ public class SearchActivity extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mDisplayPosition.setText("You want to search for " + mSharedPreferences.getString(Constants.LAST_FOOD_SEARCH, null));
         getRestaurants(location);
-        loadFragment();
     }
 
     public void loadFragment(){
         FragmentTransaction fragmentTrans = getSupportFragmentManager().beginTransaction();
-        fragmentTrans.add(R.id.fragmentHolder, new RestaurantListFragment());
+        fragmentTrans.replace(R.id.fragmentHolder, RestaurantListFragment.newInstance(mRestaurants));
         fragmentTrans.commit();
     }
 
@@ -58,32 +57,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 mRestaurants = yelpService.processResults(response);
+                loadFragment();
 
-
-
-//                this.runOnUiThread(new Runnable() {
-//                    // Line above states 'getActivity()' instead of previous 'RestaurantListActivity.this'
-//                    // because fragments do not have own context, and must inherit from corresponding activity.
-//
-//
-//                    @Override
-//                    public void run() {
-//                        mAdapter = new RestaurantListAdapter(getActivity(), mRestaurants);
-//                        // Line above states `getActivity()` instead of previous
-//                        // 'getApplicationContext()' because fragments do not have own context,
-//                        // must instead inherit it from corresponding activity.
-//
-//                        mRecyclerView.setAdapter(mAdapter);
-//                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//                        // Line above states 'new LinearLayoutManager(getActivity());' instead of previous
-//                        // 'new LinearLayoutManager(RestaurantListActivity.this);' when method resided
-//                        // in RestaurantListActivity because Fragments do not have context
-//                        // and must instead inherit from corresponding activity.
-//
-//                        mRecyclerView.setLayoutManager(layoutManager);
-//                        mRecyclerView.setHasFixedSize(true);
-//                    }
-//                });
             }
         });
     }

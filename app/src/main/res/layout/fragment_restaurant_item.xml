@@ -16,35 +16,35 @@
 
         <ImageView
             android:id="@+id/restaurantImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="369dp"
+            android:layout_height="142dp"
             android:scaleType="centerCrop"
             android:src="@drawable/mainbg"
-            />
+            tools:layout_editor_absoluteY="1dp"
+            android:layout_marginStart="8dp"
+            tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/restaurantName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="353dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:background="@color/colorPrimaryDark"
             android:text="description"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/cardview_light_background"
-            android:textSize="18sp"
-            card_view:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            card_view:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="8dp"
-            card_view:layout_constraintRight_toRightOf="parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/icons"
             card_view:layout_constraintBottom_toBottomOf="@+id/restaurantImage"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginRight="8dp"
+            card_view:layout_constraintRight_toRightOf="@+id/restaurantImage"
+            android:layout_marginLeft="8dp"
+            card_view:layout_constraintLeft_toLeftOf="@+id/restaurantImage" />
 
 
     </android.support.constraint.ConstraintLayout>
