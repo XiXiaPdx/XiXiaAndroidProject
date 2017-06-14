@@ -65,11 +65,11 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (validate()) {
+
             if (v == closeButton) {
                 dismiss();
             }
-        }
+
         if (v == openCamera ){
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) !=
@@ -77,7 +77,7 @@ public class DescribeFoodFragment extends DialogFragment implements View.OnClick
                 startActivityForResult(takePictureIntent, 1);
             }
         }
-        if (v == searchButton ){
+        if (validate() && v == searchButton ){
             Toast.makeText(getActivity(), "Description Saved!",
                     Toast.LENGTH_SHORT).show();
             String description = describeEditText.getText().toString();

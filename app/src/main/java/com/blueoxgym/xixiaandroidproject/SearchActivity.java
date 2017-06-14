@@ -1,15 +1,13 @@
 package com.blueoxgym.xixiaandroidproject;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 
+import com.blueoxgym.xixiaandroidproject.Fragments.RestaurantListFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Restaurant;
 import com.blueoxgym.xixiaandroidproject.Services.YelpService;
 
@@ -32,11 +30,18 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurants);
+        setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mDisplayPosition.setText("You want to search for " + mSharedPreferences.getString(Constants.LAST_FOOD_SEARCH, null));
         getRestaurants(location);
+        loadFragment();
+    }
+
+    public void loadFragment(){
+        FragmentTransaction fragmentTrans = getSupportFragmentManager().beginTransaction();
+        fragmentTrans.add(R.id.fragmentHolder, new RestaurantListFragment());
+        fragmentTrans.commit();
     }
 
 
@@ -53,7 +58,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 mRestaurants = yelpService.processResults(response);
-                Log.d("Restaurants", mRestaurants.get(0).getName());
+
+
 
 //                this.runOnUiThread(new Runnable() {
 //                    // Line above states 'getActivity()' instead of previous 'RestaurantListActivity.this'
