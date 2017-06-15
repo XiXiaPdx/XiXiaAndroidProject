@@ -19,7 +19,6 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity {
-    public String location = "97232";
     private SharedPreferences mSharedPreferences;
     public ArrayList<Restaurant> mRestaurants;
 
