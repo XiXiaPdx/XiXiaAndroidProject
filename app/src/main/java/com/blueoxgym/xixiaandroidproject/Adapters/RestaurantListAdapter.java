@@ -2,6 +2,7 @@ package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -68,7 +69,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             mContext = itemView.getContext();
             mMapButton.setOnClickListener(this);
             mMapButton.setBackgroundColor(Color.TRANSPARENT);
-
         }
 
         public void bindRestaurant(Restaurant restaurant) {
