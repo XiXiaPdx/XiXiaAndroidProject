@@ -1,6 +1,10 @@
 package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.Image;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +14,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blueoxgym.xixiaandroidproject.Constants;
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.R;
+import com.blueoxgym.xixiaandroidproject.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -31,6 +37,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     private OpenDescribeFragment mOpenDescribe;
     public FirebaseAuth mAuth;
     public ArrayList<Picture> mUserFoods = new ArrayList<>();
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     public PictureListAdapter() { }
 
@@ -40,6 +48,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         mOpenDescribe = listener;
         mContext = context;
         mPictures = pictures;
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mEditor = mSharedPreferences.edit();
     }
 
     public class PictureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -51,17 +61,21 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         @Bind(R.id.descriptionTextView)
         TextView descriptionTextView;
         private Context context;
+        @Bind(R.id.quickSearch)
+        ImageButton mQuickSearch;
 
         public PictureViewHolder(View itemView)   {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
             mFindFoodButton.setOnClickListener(this);
+            mQuickSearch.setOnClickListener(this);
             mAuth = FirebaseAuth.getInstance();
         }
 
         public void bindPicture(Picture picture) {
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
+            mQuickSearch.setVisibility(View.INVISIBLE);
             if (mAuth.getCurrentUser() == null ){
                 mFindFoodButton.setVisibility(View.INVISIBLE);
                 descriptionTextView.setText("");
@@ -81,6 +95,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             for(Picture userFood: mUserFoods){
                 if( userFood.getID().equals(searchID)){
                     resultDescription = userFood.getDescription();
+                    mQuickSearch.setVisibility(View.VISIBLE);
                     break;
                 }
             }
@@ -91,6 +106,14 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             if(v == mFindFoodButton) {
                 mOpenDescribe.openDescribeFragment(v, mPictures.get(getAdapterPosition()));
             }
+            if (v == mQuickSearch){
+                String searchFood = descriptionTextView.getText().toString();
+                mEditor.putString(Constants.LAST_FOOD_SEARCH, searchFood).apply();
+                Intent intent = new Intent (mContext, SearchActivity.class);
+                mContext.startActivity(intent);
+
+            }
+
         }
     }
     @Override
@@ -103,9 +126,6 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     @Override
     public void onBindViewHolder(PictureViewHolder holder,  int position) {
         holder.bindPicture(mPictures.get(position));
-        if(mUserFoods != null) {
-            Log.d("Size of User Foods", Integer.toString(mUserFoods.size()));
-        }
     }
 
     public void showHideFoodListener(ArrayList<Picture> userFoods) {
