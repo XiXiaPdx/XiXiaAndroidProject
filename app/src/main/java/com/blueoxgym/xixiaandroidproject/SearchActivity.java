@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Fragments.RestaurantListFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Restaurant;
@@ -15,15 +13,12 @@ import com.blueoxgym.xixiaandroidproject.Services.YelpService;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity {
-    @Bind(R.id.textView3)
-    TextView mDisplayPosition;
     public String location = "97232";
     private SharedPreferences mSharedPreferences;
     public ArrayList<Restaurant> mRestaurants;
@@ -34,7 +29,6 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mDisplayPosition.setText("You want to search for " + mSharedPreferences.getString(Constants.LAST_FOOD_SEARCH, null));
         getRestaurants(mSharedPreferences.getString(Constants.LAST_FOOD_SEARCH, null));
     }
 
@@ -46,8 +40,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
     public void getRestaurants(String food) {
-        Log.d("FOod to search", food);
-
         final YelpService yelpService = new YelpService();
 
         yelpService.findRestaurants(food, new Callback() {
