@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.blueoxgym.xixiaandroidproject.R;
 
 import org.parceler.Parcels;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -55,8 +53,6 @@ public class RestaurantListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         mRestaurants = Parcels.unwrap(getArguments().getParcelable("restaurants"));
-        Log.d("Restaurants", mRestaurants.toString());
-
     }
 
     @Override
@@ -71,9 +67,5 @@ public class RestaurantListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRestaurantRecyclerView.setLayoutManager(layoutManager);
         mRestaurantRecyclerView.setHasFixedSize(true);
-
     }
-
-
-
 }

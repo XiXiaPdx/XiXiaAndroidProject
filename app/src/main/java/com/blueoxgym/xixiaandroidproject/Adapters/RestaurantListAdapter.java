@@ -2,7 +2,6 @@ package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public RestaurantListAdapter(Context context, ArrayList<Restaurant> restaurants) {
         mContext = context;
         mRestaurants = restaurants;
-        Log.d("IN ADAPTEr", restaurants.toString());
     }
 
 
@@ -43,6 +41,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         ImageView mImage;
         @Bind (R.id.restaurantName)
         TextView mName;
+        @Bind (R.id.restaurantRating)
+        TextView mRating;
 
         public RestaurantViewHolder(View itemView) {
             super(itemView);
@@ -54,8 +54,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         public void bindRestaurant(Restaurant restaurant) {
             mName.setText(restaurant.getName());
             Picasso.with(mContext).load(restaurant.getImageUrl()).resize(MAX_WIDTH, MAX_HEIGHT).centerCrop().into(mImage);
-//            mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");
-
+             mRating.setText(restaurant.getRating() + "/5");
         }
 
     }
@@ -76,6 +75,4 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public int getItemCount() {
         return mRestaurants.size();
     }
-
-
 }
