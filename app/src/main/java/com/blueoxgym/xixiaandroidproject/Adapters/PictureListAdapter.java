@@ -97,6 +97,9 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             if(v == mFindFoodButton) {
                 mOpenDescribe.openDescribeFragment(v, mPictures.get(getAdapterPosition()));
             }
+            if (v == mQuickSearch){
+                Log.d("string", descriptionTextView.getText().toString());
+            }
 
         }
     }
@@ -110,9 +113,6 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     @Override
     public void onBindViewHolder(PictureViewHolder holder,  int position) {
         holder.bindPicture(mPictures.get(position));
-        if(mUserFoods != null) {
-            Log.d("Size of User Foods", Integer.toString(mUserFoods.size()));
-        }
     }
 
     public void showHideFoodListener(ArrayList<Picture> userFoods) {
