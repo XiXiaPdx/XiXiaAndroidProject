@@ -54,6 +54,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity implements OpenDescribeFragment {
     public static final String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog mLoadingFoodsDialog;
+    private ProgressDialog mLoadUserDialog;
 
     public ArrayList<Picture> mPictures = new ArrayList<>();
     @Bind(R.id.pictureRecycleView)
@@ -159,6 +160,7 @@ getFoodPictures();
         mLoadingFoodsDialog.setCancelable(false);
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -171,11 +173,12 @@ getFoodPictures();
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1200);
                 } catch (InterruptedException e){
 
                 }
                 getUserFoods();
+
             }
         });
         background.start();
