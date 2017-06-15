@@ -2,12 +2,15 @@ package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,6 +58,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         TextView mName;
         @Bind (R.id.restaurantRating)
         TextView mRating;
+        @Bind(R.id.mapButton)
+        ImageButton mMapButton;
 
 
 
@@ -62,8 +67,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
-            mImage.setOnClickListener(this);
-
+            mMapButton.setOnClickListener(this);
+            mMapButton.setBackgroundColor(Color.TRANSPARENT);
         }
 
         public void bindRestaurant(Restaurant restaurant) {
@@ -74,7 +79,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
         @Override
         public void onClick(View v) {
-            if(v == mImage) {
+            if(v == mMapButton) {
                 int itemPosition = getLayoutPosition();
                 Log.d("Restaurant Clicked", Integer.toString(itemPosition));
                 testListener.sendMessage("From Adapter, the view position "+ Integer.toString(itemPosition));
