@@ -1,15 +1,19 @@
 package com.blueoxgym.xixiaandroidproject.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.RestaurantListAdapter;
+import com.blueoxgym.xixiaandroidproject.Interfaces.adapterToFragmentListener;
+import com.blueoxgym.xixiaandroidproject.MainActivity;
 import com.blueoxgym.xixiaandroidproject.Models.Restaurant;
 import com.blueoxgym.xixiaandroidproject.R;
 
@@ -20,7 +24,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RestaurantListFragment extends Fragment {
+public class RestaurantListFragment extends Fragment implements adapterToFragmentListener {
     public ArrayList<Restaurant> mRestaurants;
     public RestaurantListAdapter mAdapter;
     public RecyclerView mRestaurantRecyclerView;
@@ -46,12 +50,14 @@ public class RestaurantListFragment extends Fragment {
 
          fragmentView =  inflater.inflate(R.layout.fragment_restaurant_list, container, false);
         mRestaurantRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.searchRecyclerView);
+
         return fragmentView;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
         mRestaurants = Parcels.unwrap(getArguments().getParcelable("restaurants"));
     }
 
@@ -62,10 +68,15 @@ public class RestaurantListFragment extends Fragment {
     }
 
     public void fillRecycler(){
-        mAdapter = new RestaurantListAdapter(getActivity(), mRestaurants);
+        mAdapter = new RestaurantListAdapter(getActivity(), mRestaurants, this);
         mRestaurantRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRestaurantRecyclerView.setLayoutManager(layoutManager);
         mRestaurantRecyclerView.setHasFixedSize(true);
+    }
+
+    @Override
+    public void sendMessage(String message) {
+        Log.d("Restaurant Fragment ", message);
     }
 }

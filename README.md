@@ -51,16 +51,27 @@ UnSpash has hi-quality, current, food photos.  You can get random photos from th
 - [x] 5. Below input field, 3 buttons.
 - [x] Close modal
     * This closes the modal, goes back to main picture stream.
-- [ ]  * Search Restaurants
+- [x]  * Search Restaurants
     * This uses their description to search Yelp API Activity for food.
 - [x] Save a user's described foods to database.
 - [x] RecyclerView of random foods will reference current user Described foods. If match, pull user description and label the food on RecyclerView.
 
 #### Bugs, Problems.
 
-1. Firebase issues - multiple unexplained calls when it only should be one.
+1. Firebase issues - multiple unexplained calls when it only should be one. No visible UI effect...just not efficient.
+
 2.  Async issue.  RecyclerView sets pictures BEFORE Firebase Database call finishes. This causes all labels to say "Description".
 
+"hacky" resolved.  Used Thread.sleep to force Firebase to wait.  
+
+#### Testing For Self-Learning
+
+- [x] Adapter to Fragment Listener with Interface
+* Restaurant List Adapter to Fragment Restaurant List
+* click on each View Holder sends string to Fragment
+* [stack overflow reference that helped.](https://stackoverflow.com/a/37535113/8140320) Especially about passing context from fragment to Adapter to "connect" and prevent NPE error when declaring Listener.
+
+- []
 
 # Technologies
 
@@ -115,7 +126,7 @@ UnSplashId = "Your Client ID From UnSplash Goes Here!!!"
 email is "yes@me.com"
 password is "123456"
 
-This login has many food pictures already described. When your random pictures loads, it is highly likely you'll see descriptions on certain food pictures. 
+This login has many food pictures already described. When your random pictures loads, it is highly likely you'll see descriptions on certain food pictures.
 
 
 ## Further Exploration
