@@ -1,7 +1,10 @@
 package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +14,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blueoxgym.xixiaandroidproject.Constants;
 import com.blueoxgym.xixiaandroidproject.Interfaces.OpenDescribeFragment;
 import com.blueoxgym.xixiaandroidproject.Models.Picture;
 import com.blueoxgym.xixiaandroidproject.R;
+import com.blueoxgym.xixiaandroidproject.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +37,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
     private OpenDescribeFragment mOpenDescribe;
     public FirebaseAuth mAuth;
     public ArrayList<Picture> mUserFoods = new ArrayList<>();
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     public PictureListAdapter() { }
 
@@ -41,6 +48,8 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         mOpenDescribe = listener;
         mContext = context;
         mPictures = pictures;
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mEditor = mSharedPreferences.edit();
     }
 
     public class PictureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -98,7 +107,11 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
                 mOpenDescribe.openDescribeFragment(v, mPictures.get(getAdapterPosition()));
             }
             if (v == mQuickSearch){
-                Log.d("string", descriptionTextView.getText().toString());
+                String searchFood = descriptionTextView.getText().toString();
+                mEditor.putString(Constants.LAST_FOOD_SEARCH, searchFood).apply();
+                Intent intent = new Intent (mContext, SearchActivity.class);
+                mContext.startActivity(intent);
+
             }
 
         }
