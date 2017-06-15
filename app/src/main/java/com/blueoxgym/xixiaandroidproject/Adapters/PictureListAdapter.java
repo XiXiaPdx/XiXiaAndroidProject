@@ -1,6 +1,7 @@
 package com.blueoxgym.xixiaandroidproject.Adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,17 +52,21 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
         @Bind(R.id.descriptionTextView)
         TextView descriptionTextView;
         private Context context;
+        @Bind(R.id.quickSearch)
+        ImageButton mQuickSearch;
 
         public PictureViewHolder(View itemView)   {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
             mFindFoodButton.setOnClickListener(this);
+            mQuickSearch.setOnClickListener(this);
             mAuth = FirebaseAuth.getInstance();
         }
 
         public void bindPicture(Picture picture) {
             Picasso.with(mContext).load(picture.getImageUrl()).into(mPictureView);
+            mQuickSearch.setVisibility(View.INVISIBLE);
             if (mAuth.getCurrentUser() == null ){
                 mFindFoodButton.setVisibility(View.INVISIBLE);
                 descriptionTextView.setText("");
@@ -81,6 +86,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             for(Picture userFood: mUserFoods){
                 if( userFood.getID().equals(searchID)){
                     resultDescription = userFood.getDescription();
+                    mQuickSearch.setVisibility(View.VISIBLE);
                     break;
                 }
             }
@@ -91,6 +97,7 @@ public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.
             if(v == mFindFoodButton) {
                 mOpenDescribe.openDescribeFragment(v, mPictures.get(getAdapterPosition()));
             }
+
         }
     }
     @Override
