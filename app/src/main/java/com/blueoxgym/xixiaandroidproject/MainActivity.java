@@ -194,6 +194,7 @@ getFoodPictures();
 
     public void getFoodPictures(){
         mOpenDescribe = this;
+
         mLoadingFoodsDialog.show();
         unSplashService.getPictures(new Callback() {
 
