@@ -3,7 +3,6 @@ package com.blueoxgym.xixiaandroidproject.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,7 +31,7 @@ import butterknife.ButterKnife;
  */
 
 public class PictureListAdapter extends RecyclerView.Adapter<PictureListAdapter.PictureViewHolder> {
-    private ArrayList<Picture> mPictures = new ArrayList<>();
+    public ArrayList<Picture> mPictures = new ArrayList<>();
     private Context mContext;
     private OpenDescribeFragment mOpenDescribe;
     public FirebaseAuth mAuth;

@@ -1,13 +1,10 @@
 package com.blueoxgym.xixiaandroidproject;
 
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.blueoxgym.xixiaandroidproject.Adapters.PictureListAdapter;
@@ -96,10 +90,7 @@ getFoodPictures();
         scrollListener = new EndlessRecyclerViewScrollListener(picGridLayOut) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
                     loadNextDataFromApi(page);
-
             }
         };
         mPictureRecycleView.addOnScrollListener(scrollListener);
@@ -119,7 +110,8 @@ getFoodPictures();
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mAdapter.showHideFoodListener(mPictures);
+                        mAdapter.mPictures = mPictures;
+                        mAdapter.showHideFoodListener(userFoods);
                     }
                 });
                 mLoadingFoodsDialog.dismiss();
@@ -142,7 +134,7 @@ getFoodPictures();
 
                 } else {
                     getSupportActionBar().setTitle("");
-
+                    userFoods = new ArrayList<>();
                     mByLine.animate().translationY(35).withLayer();
                     mLoginInstruction.animate().translationY(6).withLayer();
                     mPictureRecycleView.animate().translationY(0).withLayer();
@@ -277,8 +269,10 @@ getFoodPictures();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     tempUserFoods.add(snapshot.getValue(Picture.class));
                 }
-                Log.d("SNAPSHOT SNAPSHOT", dataSnapshot.toString());
-                mAdapter.showHideFoodListener(tempUserFoods);
+                userFoods = tempUserFoods;
+                Log.d("USER FOOD", userFoods.toString());
+
+                mAdapter.showHideFoodListener(userFoods);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
